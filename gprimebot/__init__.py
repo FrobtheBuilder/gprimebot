@@ -26,7 +26,7 @@ CONSUMER_SECRET: str = config.get("authentication", "ConsumerSecret")
 ACCESS_TOKEN: str = config.get("authentication", "AccessToken")
 ACCESS_TOKEN_SECRET: str = config.get("authentication", "AccessTokenSecret")
 TWEET: bool = config.getboolean("options", "Tweet")
-
+INTERVAL: float = config.getfloat("options", "PostIntervalHours")
 
 auth = tweepy.OAuth1UserHandler(
    CONSUMER_KEY, 
@@ -114,7 +114,7 @@ def post():
         print(f"{posts_left} {'post' if posts_left == 1 else 'posts'} left")
     
     state.count = len(filenames)
-    state.next_post_time = time.time() + (60 * 60 * 2)
+    state.next_post_time = time.time() + (60 * 60 * INTERVAL)
     save_botstate(state)
 
 while True:
